@@ -3,12 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<!-- ป้องกันการแคช -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-	
     <title>Rerun Jobs Tool_V4 by Daiice</title>
     <style>
         * {
@@ -127,15 +121,6 @@
             color: #333;
             font-size: 16px;
         }
-		
-		.table-wrapper label {
-			display: block;
-			width: 100%;
-			color: #999999;
-			font-size: 9px;
-			text-align: right;
-			margin-bottom: 3px;
-		}
         
         .input-group input, .input-group textarea {
             width: 100%;
@@ -518,7 +503,6 @@
             </div>
 
             <div class="table-wrapper">
-				<label>⭐ Developed by Dai Kittipanvoragul.</label>
                 <table id="resultTable" style="display:none">
                     <thead>
                         <tr>
@@ -807,10 +791,10 @@
         });
 
         // ===== Odate Calculator Functions =====
-        const holidays2025 = ['2025-01-01', '2025-02-12', '2025-04-07', '2025-04-14', '2025-04-15', 
-                              '2025-05-01', '2025-05-05', '2025-05-12', '2025-06-02', '2025-06-03',
-                              '2025-07-10', '2025-07-28', '2025-08-11', '2025-08-12', '2025-10-13',
-                              '2025-10-23', '2025-12-05', '2025-12-10', '2025-12-31'];
+        const holidays2026 = ["2025-12-31","2026-01-01","2026-01-02","2026-03-03","2026-04-06",
+							  "2026-04-13","2026-04-14","2026-04-15","2026-05-01","2026-05-04",
+							  "2026-06-01","2026-06-03","2026-07-28","2026-07-29","2026-08-12",
+							  "2026-10-13","2026-10-23","2026-12-07","2026-12-10","2026-12-31"];
 
         document.getElementById('currentDate').valueAsDate = new Date();
 
@@ -831,7 +815,7 @@
         }
 
         function isHoliday(date) {
-            return holidays2025.includes(toDateString(date));
+            return holidays2026.includes(toDateString(date));
         }
 
         function isWorkingDay(date) {
