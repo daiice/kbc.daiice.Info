@@ -3,21 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebEx Request_V5 by Daiice</title>
+  <title>WebEx Request_V6 by Daiice</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+    * { margin:0; padding:0; box-sizing:border-box; }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       padding: 20px;
     }
-    
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -26,471 +22,488 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
       overflow: hidden;
     }
-    
+
+    /* ── header ── */
     .header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       padding: 30px;
       text-align: center;
     }
-    
-    .header h1 {
-      font-size: 2em;
-      margin-bottom: 5px;
+    .header h1 { font-size:2em; margin-bottom:5px; }
+    .header p  { opacity:0.9; font-size:0.95em; }
+
+    /* ── input section ── */
+    .input-section { padding:30px; background:#f8f9fa; }
+    .form-group    { margin-bottom:20px; }
+    .form-group > label {
+      display:block; font-weight:600; margin-bottom:8px; color:#333; font-size:0.95em;
     }
-    
-    .header p {
-      opacity: 0.9;
-      font-size: 0.95em;
-    }
-    
-    .input-section {
-      padding: 30px;
-      background: #f8f9fa;
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #333;
-      font-size: 0.95em;
-    }
-    
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-    
+
     input[type="text"],
     input[type="date"],
     input[type="number"],
     select {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 1em;
-      transition: all 0.3s;
-      background: white;
+      width:100%; padding:12px 15px;
+      border:2px solid #e0e0e0; border-radius:10px;
+      font-size:1em; transition:all 0.3s; background:white;
     }
-    
     input[type="text"]:focus,
     input[type="date"]:focus,
     input[type="number"]:focus,
     select:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      outline:none; border-color:#667eea;
+      box-shadow:0 0 0 3px rgba(102,126,234,0.1);
     }
-    
+
+    /* ── counter row ── */
+    .count-row {
+      display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+    }
+
+    /* Mgt fixed box */
+    .mgt-box {
+      display:flex; flex-direction:column; gap:6px; min-width:90px;
+    }
+    .mgt-box .count-label {
+      font-weight:700; font-size:0.9em; color:#444;
+    }
+    .mgt-box .mgt-val {
+      text-align:center; font-size:1.35em; font-weight:700;
+      padding:10px 8px; border-radius:10px;
+      background:#fef3c7; border:2px solid #fcd34d; color:#d97706;
+      pointer-events:none; user-select:none;
+    }
+
+    .count-box {
+      display:flex; flex-direction:column; gap:6px; flex:1; min-width:120px;
+    }
+    .count-box .count-label {
+      font-weight:700; font-size:0.9em; color:#444;
+    }
+    .count-box .count-label .badge-prod {
+      display:inline-block; background:#dcfce7; color:#16a34a;
+      padding:2px 9px; border-radius:12px; font-size:0.88em; margin-left:5px;
+    }
+    .count-box .count-label .badge-uat {
+      display:inline-block; background:#dbeafe; color:#2563eb;
+      padding:2px 9px; border-radius:12px; font-size:0.88em; margin-left:5px;
+    }
+    .count-box input[type="number"] {
+      text-align:center; font-size:1.35em; font-weight:700; padding:10px 8px;
+    }
+
+    /* total badge */
+    .total-badge {
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      min-width:90px; padding:10px 18px; border-radius:14px;
+      background:#f0fdf4; border:2px solid #86efac; gap:1px; transition:all 0.25s;
+    }
+    .total-badge .t-label {
+      font-size:0.72em; color:#15803d; font-weight:700;
+      text-transform:uppercase; letter-spacing:0.6px;
+    }
+    .total-badge .t-value { font-size:1.4em; font-weight:700; color:#15803d; }
+    .total-badge .t-max   { font-size:0.7em;  color:#15803d; opacity:0.7; }
+
+    .total-badge.warn                              { background:#fef2f2; border-color:#fca5a5; }
+    .total-badge.warn .t-label,
+    .total-badge.warn .t-value,
+    .total-badge.warn .t-max                       { color:#dc2626; }
+
+    .error-msg {
+      color:#dc2626; font-size:0.83em; font-weight:600;
+      margin-top:8px; min-height:20px; transition:opacity 0.2s;
+    }
+    .error-msg.hidden { opacity:0; }
+
+    /* ── INC inputs grid ── */
     .inc-inputs {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+      gap:10px;
     }
-    
-    .inc-item {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+    .inc-item { display:flex; flex-direction:column; gap:5px; }
+
+    .inc-label { font-weight:600; color:#667eea; font-size:0.85em; }
+    .inc-label .tag-prod {
+      background:#dcfce7; color:#16a34a;
+      padding:1px 7px; border-radius:10px; font-size:0.85em; margin-left:4px;
     }
-    
-    .inc-label {
-      font-weight: 600;
-      color: #667eea;
-      font-size: 0.85em;
+    .inc-label .tag-uat {
+      background:#dbeafe; color:#2563eb;
+      padding:1px 7px; border-radius:10px; font-size:0.85em; margin-left:4px;
     }
-    
+    .inc-label .tag-mgt {
+      background:#fef3c7; color:#d97706;
+      padding:1px 7px; border-radius:10px; font-size:0.85em; margin-left:4px;
+    }
+
     .inc-input {
-      padding: 10px 12px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 0.95em;
-      transition: all 0.3s;
+      padding:10px 12px; border:2px solid #e0e0e0;
+      border-radius:8px; font-size:0.95em; transition:all 0.3s;
     }
-    
     .inc-input:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      outline:none; border-color:#667eea;
+      box-shadow:0 0 0 3px rgba(102,126,234,0.1);
     }
-    
-    .inc-input.required:invalid {
-      border-color: #ef4444;
-    }
-    
-    .inc-input.required:valid {
-      border-color: #10b981;
-    }
-    
+    .inc-input.required:invalid { border-color:#ef4444; }
+    .inc-input.required:valid   { border-color:#10b981; }
+
+    /* ── generate button ── */
     .generate-btn {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1em;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 20px;
+      width:100%; padding:15px;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      color:white; border:none; border-radius:10px;
+      font-size:1.1em; font-weight:600; cursor:pointer;
+      transition:all 0.3s; margin-top:20px;
     }
-    
-    .generate-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    .generate-btn:hover  { transform:translateY(-2px); box-shadow:0 10px 25px rgba(102,126,234,0.3); }
+    .generate-btn:active { transform:translateY(0); }
+    .generate-btn:disabled {
+      background:#c4c4c4; cursor:not-allowed; transform:none; box-shadow:none;
     }
-    
-    .generate-btn:active {
-      transform: translateY(0);
-    }
-    
-    .output-section {
-      padding: 30px;
-      display: none;
-    }
-    
-    .output-section.show {
-      display: block;
-    }
-    
+
+    /* ── output ── */
+    .output-section       { padding:30px; display:none; }
+    .output-section.show  { display:block; }
+
     .section-card {
-      background: white;
-      border: 2px solid #e0e0e0;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 20px;
-      transition: all 0.3s;
+      background:white; border:2px solid #e0e0e0;
+      border-radius:15px; padding:20px; margin-bottom:20px; transition:all 0.3s;
     }
-    
-    .section-card:hover {
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      border-color: #667eea;
-    }
-    
+    .section-card:hover { box-shadow:0 5px 15px rgba(0,0,0,0.1); border-color:#667eea; }
+
     .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #f0f0f0;
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:15px; padding-bottom:10px; border-bottom:2px solid #f0f0f0;
     }
-    
-    .section-title {
-      font-weight: 600;
-      color: #333;
-      font-size: 1.1em;
-    }
-    
+    .section-title { font-weight:600; color:#333; font-size:1.1em; }
+
     .copy-btn {
-      padding: 8px 20px;
-      background: #667eea;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.9em;
-      font-weight: 600;
-      transition: all 0.3s;
+      padding:8px 20px; background:#667eea; color:white;
+      border:none; border-radius:8px; cursor:pointer;
+      font-size:0.9em; font-weight:600; transition:all 0.3s;
     }
-    
-    .copy-btn:hover {
-      background: #5568d3;
-      transform: scale(1.05);
-    }
-    
-    .copy-btn.copied {
-      background: #10b981;
-    }
-    
+    .copy-btn:hover  { background:#5568d3; transform:scale(1.05); }
+    .copy-btn.copied { background:#10b981; }
+
     .content-box {
-      background: #f8f9fa;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 15px;
-      min-height: 100px;
-      white-space: pre-wrap;
-      font-size: 0.95em;
-      line-height: 1.6;
-      margin-top: 10px;
+      background:#f8f9fa; border:1px solid #e0e0e0;
+      border-radius:8px; padding:15px; min-height:100px;
+      white-space:pre-wrap; font-size:0.95em; line-height:1.6; margin-top:10px;
     }
-    
-    .content-box[contenteditable="true"]:focus {
-      outline: 2px solid #667eea;
-      background: white;
-    }
-    
+    .content-box[contenteditable="true"]:focus { outline:2px solid #667eea; background:white; }
+
     .highlight {
-      background-color: #FFFF00;
-      text-decoration: underline;
-      padding: 2px 4px;
-      border-radius: 3px;
-      font-weight: 600;
-      color: #FF0000;
+      background-color:#FFFF00; text-decoration:underline;
+      padding:2px 4px; border-radius:3px; font-weight:600; color:#FF0000;
     }
-    
+
     .webex-list {
-      font-family: 'Courier New', monospace;
-      background: #1e293b;
-      color: #e2e8f0;
-      padding: 20px;
-      border-radius: 8px;
-      font-size: 0.9em;
-      line-height: 1.8;
+      font-family:'Courier New', monospace;
+      background:#1e293b; color:#e2e8f0;
+      padding:20px; border-radius:8px; font-size:0.9em; line-height:1.8;
     }
-    
-    @media (max-width: 768px) {
-      .inc-inputs {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      }
-      
-      .section-header {
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-      }
-      
-      .copy-btn {
-        width: 100%;
-      }
-    }
-    
-    .info-badge {
-      display: inline-block;
-      background: #e0e7ff;
-      color: #667eea;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.85em;
-      font-weight: 600;
-      margin-left: 10px;
+
+    /* ── responsive ── */
+    @media (max-width:768px) {
+      .inc-inputs  { grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); }
+      .section-header { flex-direction:column; gap:10px; align-items:flex-start; }
+      .copy-btn    { width:100%; }
+      .count-row   { flex-direction:column; align-items:stretch; }
+      .mgt-box     { align-self:center; }
+      .total-badge { align-self:center; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>🌐 WebEx Request_V5 by Daiice</h1>
-      <p>ระบบสร้างข้อความ WebEx อัตโนมัติ</p>
-    </div>
-    
-    <div class="input-section">
-      <div class="form-group">
-        <label for="dateInput">📅 วันที่:</label>
-        <input type="date" id="dateInput">
-      </div>
-      
-      <div class="form-group">
-        <label>🔢 จำนวน WebEx ที่ต้องการ (4-8): <span class="info-badge" id="webexCountInfo">6 WebEx</span></label>
-        <input type="number" id="webexCount" min="4" max="8" value="7" onchange="updateIncInputs()">
-      </div>
-      
-      <div class="form-group">
-        <label>📋 Incident Numbers:</label>
-        <div class="inc-inputs" id="incInputs"></div>
-      </div>
-      
-      <button class="generate-btn" onclick="generateText()">✨ สร้างข้อความทั้งหมด</button>
-    </div>
-    
-    <div class="output-section" id="outputArea"></div>
+<div class="container">
+
+  <!-- header -->
+  <div class="header">
+    <h1>🌐 WebEx Request_V6 by Daiice</h1>
+    <p>ระบบสร้างข้อความ WebEx อัตโนมัติ</p>
   </div>
 
-  <script>
-    // Initialize
-    updateIncInputs();
-    
-    function formatDate(input) {
-      const date = new Date(input);
-      const day = ('0' + date.getDate()).slice(-2);
-      const month = ('0' + (date.getMonth() + 1)).slice(-2);
-      const year = (date.getFullYear() + 543).toString().slice(-2);
-      return `${day}/${month}/${year}`;
-    }
+  <!-- inputs -->
+  <div class="input-section">
 
-    function updateIncInputs() {
-      const count = parseInt(document.getElementById('webexCount').value);
-      document.getElementById('webexCountInfo').textContent = `${count} WebEx`;
-      
-      const container = document.getElementById('incInputs');
-      container.innerHTML = '';
-      
-      // Management (always first)
-      container.innerHTML += `
-        <div class="inc-item">
-          <div class="inc-label">INC1: Mgt *</div>
-          <input type="text" id="inc1" class="inc-input required" placeholder="INC..." required>
+    <!-- วันที่ -->
+    <div class="form-group">
+      <label for="dateInput">📅 วันที่:</label>
+      <input type="date" id="dateInput">
+    </div>
+
+    <!-- Mgt + PROD + UAT counters -->
+    <div class="form-group">
+      <label>🔢 จำนวน WebEx (รวม Mgt + PROD + UAT ไม่เกิน 8):</label>
+      <div class="count-row">
+
+        <!-- Mgt = 1 เสมอ (fixed, กดไม่ได้) -->
+        <div class="mgt-box">
+          <span class="count-label">จำนวน <span style="display:inline-block;background:#fef3c7;color:#d97706;padding:2px 9px;border-radius:12px;font-size:0.88em;margin-left:5px;">Mgt</span></span>
+          <div class="mgt-val">1</div>
         </div>
-      `;
-      
-      // Middle WebEx (requires INC)
-      for (let i = 2; i < count; i++) {
-        container.innerHTML += `
-          <div class="inc-item">
-            <div class="inc-label">INC${i} *</div>
-            <input type="text" id="inc${i}" class="inc-input required" placeholder="INC..." required>
-          </div>
-        `;
-      }
-      
-      // UAT (always last, no INC required)
-      container.innerHTML += `
-        <div class="inc-item">
-          <div class="inc-label">WebEx UAT</div>
-          <input type="text" value="ไม่ต้องระบุ" class="inc-input" disabled style="background: #f0f0f0; color: #999;">
+
+        <!-- PROD -->
+        <div class="count-box">
+          <span class="count-label">จำนวน <span class="badge-prod">PROD</span></span>
+          <input type="number" id="prodCount" min="3" max="7" value="4" oninput="onCountChange()">
         </div>
-      `;
-    }
 
-    function copyToClipboard(elementId, btnElement) {
-      const el = document.getElementById(elementId);
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-      document.execCommand("copy");
-      selection.removeAllRanges();
-      
-      // Visual feedback
-      const originalText = btnElement.textContent;
-      btnElement.textContent = '✓ คัดลอกแล้ว!';
-      btnElement.classList.add('copied');
-      setTimeout(() => {
-        btnElement.textContent = originalText;
-        btnElement.classList.remove('copied');
-      }, 2000);
-    }
-
-    function createSection(index, subject, bodyHTML) {
-      return `
-        <div class="section-card">
-          <div class="section-header">
-            <div class="section-title">📧 หัวเรื่อง #${index}</div>
-            <button class="copy-btn" onclick="copyToClipboard('subject${index}', this)">📋 Copy หัวเรื่อง</button>
-          </div>
-          <div id="subject${index}" class="content-box" contenteditable="true">${subject}</div>
-          
-          <div class="section-header" style="margin-top: 20px;">
-            <div class="section-title">📝 ข้อความ #${index}</div>
-            <button class="copy-btn" onclick="copyToClipboard('body${index}', this)">📋 Copy ข้อความ</button>
-          </div>
-          <div id="body${index}" class="content-box" contenteditable="true">${bodyHTML}</div>
+        <!-- UAT -->
+        <div class="count-box">
+          <span class="count-label">จำนวน <span class="badge-uat">UAT</span></span>
+          <input type="number" id="uatCount" min="1" max="3" value="2" oninput="onCountChange()">
         </div>
-      `;
-    }
 
-    function createWebexList(dateFormatted, inc, count) {
-      let list = `Webex List Daily | ${dateFormatted}\n----------------- Daily Webex -----------------\n\n`;
-      
-      // Management
-      list += `${inc[1]}\nWebex #1 ขา Manage ECS Monitoring ครับ\nURL1\n\n`;
-      
-      // Daily WebEx
-      for (let i = 2; i < Math.min(4, count); i++) {
-        list += `WebEx PROD #${i} : ${inc[i]} ครับ\nURL${i}\n\n`;
-      }
-      
-      // Spare WebEx
-      if (count > 3) {
-        list += `----------------- Spare Webex -----------------\n\n`;
-        for (let i = 4; i < count; i++) {
-          list += `WebEx PROD #${i} : ${inc[i]} ครับ\nURL${i}\n\n`;
-        }
-      }
-      
-      // UAT
-      list += `WebEx UAT #${count} ครับ\nURL${count}`;
-      
-      return list;
-    }
-	
-	document.getElementById('dateInput').valueAsDate = new Date();
-
-    function generateText() {
-	  const dateRaw = document.getElementById('dateInput').value;
-      if (!dateRaw) {
-        alert("⚠️ กรุณาเลือกวันที่ก่อน");
-        return;
-      }
-
-      const count = parseInt(document.getElementById('webexCount').value);
-      
-      // Check if all required INC fields are filled
-      const inc = [];
-      let allFilled = true;
-      for (let i = 1; i < count; i++) {
-        const val = document.getElementById(`inc${i}`);
-        if (val && val.value.trim() === '') {
-          allFilled = false;
-          val.style.borderColor = '#ef4444';
-        } else if (val) {
-          inc[i] = val.value.trim();
-          val.style.borderColor = '#10b981';
-        }
-      }
-      
-      if (!allFilled) {
-        alert("⚠️ กรุณากรอกเลข INC ให้ครบทุกช่อง");
-        return;
-      }
-
-      const dateFormatted = formatDate(dateRaw);
-      const timeRange = `${dateFormatted} 08:00 - 24:00`;
-      const highlight = `<span class="highlight">รบกวนตั้ง Auto Accept Mouse & Keyboard ให้ด้วยครับ</span>`;
-
-      const sections = [];
-
-      // Management (always #1)
-      sections.push(createSection(1,
-        `[KBC] ขอใช้งาน WebEx Production ขา Management เพื่อ Support การเปิดหน้า ECS Dashboard Monitoring #1`,
-        `เรียน ทีม IT-Oper<br><br>
-	Refer Incident: ${inc[1]} ทีม KBC ขอใช้งาน WebEx Production ขา Management เพื่อ Support การเปิดหน้า ECS Dashboard Monitoring ${timeRange} ${highlight}`
-      ));
-
-      // Middle WebEx (#2 to #count-1)
-      for (let i = 2; i < count; i++) {
-        sections.push(createSection(i,
-          `[KBC] ขอใช้งาน WebEx เพื่อตรวจสอบปัญหา Ref. ${inc[i]} #${i}`,
-          `เรียน ทีม IT-Oper<br><br>
-	Refer Incident: ${inc[i]} รบกวนขอ WebEx เพื่อตรวจสอบแก้ไขปัญหาที่เกิดขึ้น ช่วงวันและเวลา ${timeRange} Wintel-KBC support เข้าเครื่อง ${highlight}`
-        ));
-      }
-
-      // UAT (always last)
-      sections.push(createSection(count,
-        `[KBC] ขอใช้งาน WebEx UAT (Service IP) เพื่อตรวจสอบระบบ ECE #${count}`,
-        `เรียน ทีม IT-Oper<br><br>
-	Request WebEx UAT (Service IP) เพื่อตรวจสอบระบบ ECE ช่วงวันและเวลา ${timeRange} น. Wintel-KBC support เข้าเครื่อง ${highlight}`
-      ));
-
-      // Webex List Daily
-      sections.push(`
-        <div class="section-card">
-          <div class="section-header">
-            <div class="section-title">📊 Webex List Daily</div>
-            <button class="copy-btn" onclick="copyToClipboard('webexList', this)">📋 Copy รายการ</button>
-          </div>
-          <div id="webexList" class="content-box webex-list" contenteditable="true">${createWebexList(dateFormatted, inc, count)}</div>
+        <!-- total badge -->
+        <div class="total-badge" id="totalBadge">
+          <span class="t-label">รวม</span>
+          <span class="t-value" id="totalValue">7</span>
+          <span class="t-max">/ 8</span>
         </div>
-      `);
+      </div>
+      <div class="error-msg hidden" id="countError">⚠️ รวม Mgt + PROD + UAT ต้องไม่เกิน 8 อัน</div>
+    </div>
 
-      const outputArea = document.getElementById('outputArea');
-      outputArea.innerHTML = sections.join('');
-      outputArea.classList.add('show');
-      
-      // Smooth scroll to output
-      outputArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    <!-- INC fields -->
+    <div class="form-group">
+      <label>📋 Incident Numbers:</label>
+      <div class="inc-inputs" id="incInputs"></div>
+    </div>
+
+    <button class="generate-btn" id="generateBtn" onclick="generateText()">✨ สร้างข้อความทั้งหมด</button>
+  </div>
+
+  <!-- output -->
+  <div class="output-section" id="outputArea"></div>
+</div>
+
+<script>
+// ── helpers ────────────────────────────────────────
+const MGT = 1;
+
+function getPROD()  { return Math.max(0, parseInt(document.getElementById('prodCount').value) || 0); }
+function getUAT()   { return Math.max(0, parseInt(document.getElementById('uatCount').value)  || 0); }
+function getTotal() { return MGT + getPROD() + getUAT(); }
+
+function formatDate(input) {
+  const d  = new Date(input);
+  const dd = ('0'+d.getDate()).slice(-2);
+  const mm = ('0'+(d.getMonth()+1)).slice(-2);
+  const yy = (d.getFullYear()+543).toString().slice(-2);
+  return `${dd}/${mm}/${yy}`;
+}
+
+// ── live validation & badge ────────────────────────
+function onCountChange() {
+  document.getElementById('prodCount').value = getPROD();
+  document.getElementById('uatCount').value  = getUAT();
+
+  const total  = getTotal();
+  const badge  = document.getElementById('totalBadge');
+  const errMsg = document.getElementById('countError');
+  const btn    = document.getElementById('generateBtn');
+
+  document.getElementById('totalValue').textContent = total;
+
+  if (total > 8) {
+    badge.classList.add('warn');
+    errMsg.classList.remove('hidden');
+    btn.disabled = true;
+  } else {
+    badge.classList.remove('warn');
+    errMsg.classList.add('hidden');
+    btn.disabled = false;
+  }
+
+  updateIncInputs();
+}
+
+// ── build INC fields ───────────────────────────────
+function updateIncInputs() {
+  const prodCount = getPROD();
+  const uatCount  = getUAT();
+  const container = document.getElementById('incInputs');
+  container.innerHTML = '';
+  let n = 1;                              // running # ต่อเนื่อง
+
+  // Mgt เสมอ 1 อัน → #1
+  container.innerHTML += `
+    <div class="inc-item">
+      <div class="inc-label">#${n} <span class="tag-mgt">Mgt</span> *</div>
+      <input type="text" id="incMgt" class="inc-input required" placeholder="INC..." required>
+    </div>`;
+  n++;
+
+  // PROD → #2, #3, …
+  for (let i = 1; i <= prodCount; i++, n++) {
+    container.innerHTML += `
+      <div class="inc-item">
+        <div class="inc-label">#${n} <span class="tag-prod">PROD</span> *</div>
+        <input type="text" id="incProd${i}" class="inc-input required" placeholder="INC..." required>
+      </div>`;
+  }
+
+  // UAT → นับต่อจาก PROD (ไม่ต้อง INC)
+  for (let u = 1; u <= uatCount; u++, n++) {
+    container.innerHTML += `
+      <div class="inc-item">
+        <div class="inc-label">#${n} <span class="tag-uat">UAT</span></div>
+        <input type="text" value="ไม่ต้องระบุ" class="inc-input" disabled style="background:#f0f0f0;color:#999;">
+      </div>`;
+  }
+}
+
+// ── copy ───────────────────────────────────────────
+function copyToClipboard(elementId, btnElement) {
+  const el = document.getElementById(elementId);
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  document.execCommand("copy");
+  sel.removeAllRanges();
+
+  const orig = btnElement.textContent;
+  btnElement.textContent = '✓ คัดลอกแล้ว!';
+  btnElement.classList.add('copied');
+  setTimeout(() => { btnElement.textContent = orig; btnElement.classList.remove('copied'); }, 2000);
+}
+
+// ── section card ───────────────────────────────────
+function createSection(idx, subject, bodyHTML) {
+  return `
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">📧 หัวเรื่อง #${idx}</div>
+        <button class="copy-btn" onclick="copyToClipboard('subject${idx}', this)">📋 Copy หัวเรื่อง</button>
+      </div>
+      <div id="subject${idx}" class="content-box" contenteditable="true">${subject}</div>
+
+      <div class="section-header" style="margin-top:20px;">
+        <div class="section-title">📝 ข้อความ #${idx}</div>
+        <button class="copy-btn" onclick="copyToClipboard('body${idx}', this)">📋 Copy ข้อความ</button>
+      </div>
+      <div id="body${idx}" class="content-box" contenteditable="true">${bodyHTML}</div>
+    </div>`;
+}
+
+// ── Webex List Daily ───────────────────────────────
+function createWebexList(dateFormatted, incMgt, incProd, prodCount, uatCount) {
+  let t = `Webex List Daily | ${dateFormatted}\n----------------- Daily Webex -----------------\n\n`;
+  let n = 1;                              // running #
+
+  // Mgt → #1
+  t += `${incMgt}\nWebex #${n} ขา Manage ECS Monitoring ครับ\nURL${n}\n\n`;
+  n++;
+
+  // Daily PROD → อันที่ 1-2 ของ PROD (คือ #2, #3)
+  for (let i = 1; i <= Math.min(2, prodCount); i++, n++) {
+    t += `WebEx PROD #${n} : ${incProd[i]} ครับ\nURL${n}\n\n`;
+  }
+
+  // Spare PROD → อันที่ 3 เลยไป
+  if (prodCount > 2) {
+    t += `----------------- Spare Webex -----------------\n\n`;
+    for (let i = 3; i <= prodCount; i++, n++) {
+      t += `WebEx PROD #${n} : ${incProd[i]} ครับ\nURL${n}\n\n`;
     }
-  </script>
+  }
+
+  // UAT → นับต่อจาก PROD
+  if (uatCount > 0) {
+    t += `----------------- UAT Webex -----------------\n\n`;
+    for (let u = 1; u <= uatCount; u++, n++) {
+      t += `WebEx UAT #${n} ครับ\nURL${n}\n\n`;
+    }
+  }
+
+  return t.trimEnd();
+}
+
+// ── init ───────────────────────────────────────────
+document.getElementById('dateInput').valueAsDate = new Date();
+updateIncInputs();
+
+// ── generate ───────────────────────────────────────
+function generateText() {
+  const dateRaw = document.getElementById('dateInput').value;
+  if (!dateRaw) { alert("⚠️ กรุณาเลือกวันที่ก่อน"); return; }
+
+  const prodCount = getPROD();
+  const uatCount  = getUAT();
+  if (getTotal() > 8) { alert("⚠️ รวม Mgt + PROD + UAT ต้องไม่เกิน 8 อัน"); return; }
+
+  // validate
+  let ok = true;
+
+  const mgtEl = document.getElementById('incMgt');
+  if (!mgtEl.value.trim()) { ok = false; mgtEl.style.borderColor = '#ef4444'; }
+  else                     { mgtEl.style.borderColor = '#10b981'; }
+  const incMgt = mgtEl.value.trim();
+
+  const incProd = [];
+  for (let i = 1; i <= prodCount; i++) {
+    const el = document.getElementById(`incProd${i}`);
+    if (!el.value.trim()) { ok = false; el.style.borderColor = '#ef4444'; }
+    else                  { incProd[i] = el.value.trim(); el.style.borderColor = '#10b981'; }
+  }
+
+  if (!ok) { alert("⚠️ กรุณากรอกเลข INC ให้ครบ (Mgt + PROD)"); return; }
+
+  // build
+  const dateFormatted = formatDate(dateRaw);
+  const timeRange     = `${dateFormatted} 08:00 - 24:00`;
+  const hl            = `<span class="highlight">รบกวนตั้ง Auto Accept Mouse &amp; Keyboard ให้ด้วยครับ</span>`;
+
+  const sections = [];
+  let idx = 1;
+
+  // 1) Mgt
+  sections.push(createSection(idx,
+    `[KBC] ขอใช้งาน WebEx Production ขา Management เพื่อ Support การเปิดหน้า ECS Dashboard Monitoring #${idx}`,
+    `เรียน ทีม Monitor<br><br>
+Refer Incident: ${incMgt} ทีม KBC ขอใช้งาน WebEx Production ขา Management เพื่อ Support การเปิดหน้า ECS Dashboard Monitoring ${timeRange} ${hl}`
+  ));
+  idx++;
+
+  // 2) PROD
+  for (let i = 1; i <= prodCount; i++, idx++) {
+    sections.push(createSection(idx,
+      `[KBC] ขอใช้งาน WebEx เพื่อตรวจสอบปัญหา Ref. ${incProd[i]} #${idx}`,
+      `เรียน ทีม Monitor<br><br>
+Refer Incident: ${incProd[i]} รบกวนขอ WebEx เพื่อตรวจสอบแก้ไขปัญหาที่เกิดขึ้น ช่วงวันและเวลา ${timeRange} Wintel-KBC support เข้าเครื่อง ${hl}`
+    ));
+  }
+
+  // 3) UAT
+  for (let u = 1; u <= uatCount; u++, idx++) {
+    sections.push(createSection(idx,
+      `[KBC] ขอใช้งาน WebEx UAT (Service IP) เพื่อตรวจสอบระบบ ECE #${idx}`,
+      `เรียน ทีม Monitor<br><br>
+Request WebEx UAT (Service IP) เพื่อตรวจสอบระบบ ECE ช่วงวันและเวลา ${timeRange} น. Wintel-KBC support เข้าเครื่อง ${hl}`
+    ));
+  }
+
+  // 4) Webex List Daily
+  sections.push(`
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">📊 Webex List Daily</div>
+        <button class="copy-btn" onclick="copyToClipboard('webexList', this)">📋 Copy รายการ</button>
+      </div>
+      <div id="webexList" class="content-box webex-list" contenteditable="true">${createWebexList(dateFormatted, incMgt, incProd, prodCount, uatCount)}</div>
+    </div>`);
+
+  const out = document.getElementById('outputArea');
+  out.innerHTML = sections.join('');
+  out.classList.add('show');
+  out.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+</script>
 </body>
 </html>
