@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual Clear Ticket V3 by Daiice</title>
+    <title>Manual Clear Ticket V4 by Daiice</title>
     <style>
         * {
             margin: 0;
@@ -80,15 +80,49 @@
             border-color: #667eea;
         }
 
+        .url-container {
+            position: relative;
+        }
+
         .url-display {
             background: #f8f9fa;
             padding: 12px;
+            padding-right: 100px;
             border: 2px solid #e0e0e0;
             border-radius: 6px;
             font-family: 'Courier New', monospace;
             font-size: 13px;
             color: #666;
             word-break: break-all;
+            min-height: 45px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .copy-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .copy-btn.copied {
+            background: #28a745;
         }
 
         textarea {
@@ -108,12 +142,45 @@
             border-color: #667eea;
         }
 
+        .body-container {
+            position: relative;
+        }
+
+        .body-copy-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .body-copy-btn:hover {
+            background: #5568d3;
+        }
+
+        .body-copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .body-copy-btn.copied {
+            background: #28a745;
+        }
+
         .button-group {
             display: flex;
             gap: 10px;
+            margin-top: 20px;
         }
 
-        button {
+        button.clear-btn {
             padding: 12px 30px;
             border: none;
             border-radius: 6px;
@@ -121,110 +188,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-        }
-
-        .send-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            flex: 1;
-        }
-
-        .send-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .send-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .clear-btn {
             background: #f5f5f5;
             color: #666;
+            flex: 1;
         }
 
         .clear-btn:hover {
             background: #e0e0e0;
-        }
-
-        .response-section {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px solid #f0f0f0;
-        }
-
-        .response-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .response-header h3 {
-            color: #333;
-        }
-
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-success {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .response-body {
-            background: #f8f9fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 15px;
-            max-height: 400px;
-            overflow: auto;
-        }
-
-        .response-body pre {
-            margin: 0;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            color: #667eea;
-        }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-right: 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .hidden {
-            display: none;
         }
 
         .info-note {
@@ -234,6 +204,10 @@
             margin-bottom: 20px;
             border-radius: 4px;
             color: #555;
+        }
+
+        .info-note strong {
+            color: #2196F3;
         }
 
         .channel-dropdown {
@@ -273,8 +247,29 @@
         .no-results {
             padding: 10px 12px;
             color: #999;
-            font-size: 14px;
-            text-align: center;
+            font-style: italic;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+
+            .url-display {
+                padding-right: 12px;
+                padding-bottom: 50px;
+            }
+
+            .copy-btn {
+                top: auto;
+                bottom: 8px;
+                right: 8px;
+                transform: none;
+            }
         }
 		
 		.links {
@@ -298,13 +293,12 @@
             background: rgba(255,255,255,0.3);
             transform: translateY(-2px);
         }
-		
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🚀 Manual Clear Ticket V3 by Daiice</h1>
+		<div class="header">
+            <h1>🚀 Manual Clear Ticket V4 by Daiice</h1>
 			<div class="links">
                 <a href="https://sprdwkccrepo01.kasikornbank.com:8185/ece-kill-chat" target="_blank">ECE Kill Chat</a>
             </div>
@@ -312,73 +306,46 @@
 
         <div class="content">
             <div class="info-note">
-                💡 <strong>หมายเหตุ : </strong> ต้องใช้ร่วมกับ Extension "Allow CORS: Access-Control-Allow-Origin"
+                <strong>📋 วิธีใช้งาน:</strong> กรอก Session ID และเลือก Channel แล้วคัดลอก URL และ Request Body ไปวางใน Postman
             </div>
 
             <div class="input-row">
                 <div class="form-group">
-                    <label>Session ID</label>
+                    <label for="sessionId">Session ID</label>
                     <input type="text" id="sessionId" placeholder="ใส่ Session ID">
                 </div>
 
                 <div class="form-group">
-                    <label>Channel</label>
-                    <input type="text" id="channelInput" placeholder="พิมพ์เพื่อค้นหา Channel..." autocomplete="off">
+                    <label for="channelInput">Channel (พิมพ์เพื่อค้นหา)</label>
+                    <input type="text" id="channelInput" placeholder="เลือกหรือพิมพ์ชื่อ Channel" autocomplete="off">
                     <div id="channelList" class="channel-dropdown hidden"></div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>URL ที่จะส่ง Request</label>
-                <div class="url-display" id="urlDisplay">กรุณาเลือก Channel ก่อน</div>
+                <label for="urlDisplay">URL สำหรับ Postman</label>
+                <div class="url-container">
+                    <div class="url-display" id="urlDisplay">กรุณาเลือก Channel ก่อน</div>
+                    <button class="copy-btn" id="copyUrlBtn" onclick="copyUrl()">คัดลอก</button>
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Request Body (JSON) - อัปเดตอัตโนมัติตาม Session ID</label>
-                <textarea id="body">{
-    "message": [
-        {
-            "conversation": {
-                "id": "Session_id"
-            },
-            "type": {
-                "value": "complete"
-            },
-            "content": "Agent has end the chat",
-            "sender": {
-                "type": "system"
-            },
-            "timeStamp": 1553702329000,
-            "id": "7499702301"
-        }
-    ]
-}</textarea>
+                <label for="body">Request Body (JSON)</label>
+                <div class="body-container">
+                    <button class="body-copy-btn" id="copyBodyBtn" onclick="copyBody()">คัดลอก</button>
+                    <textarea id="body" placeholder="Request body จะแสดงที่นี่"></textarea>
+                </div>
             </div>
 
             <div class="button-group">
-                <button class="send-btn" id="sendBtn" onclick="sendRequest()">Send Request</button>
-                <button class="clear-btn" onclick="clearAll()">Clear</button>
-            </div>
-
-            <div class="response-section hidden" id="responseSection">
-                <div class="response-header">
-                    <h3>Response</h3>
-                    <span class="status-badge" id="statusBadge"></span>
-                </div>
-                <div class="response-body">
-                    <pre id="responseBody"></pre>
-                </div>
-            </div>
-
-            <div class="loading hidden" id="loading">
-                <div class="spinner"></div>
-                <span>Sending request...</span>
+                <button class="clear-btn" onclick="clearAll()">🗑️ ล้างข้อมูลทั้งหมด</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Channel Data
+        // Channel Groups
         const channelGroups = {
             '1. K CONNECT LINE': [
                 'EHD_CHAT_BANCASSURANCE', 'EHD_CHAT_BN_ACCOUNTING', 'EHD_CHAT_BN_PROCESS',
@@ -556,7 +523,7 @@
 
         function updateBodyPreview() {
             const sessionId = sessionIdInput.value.trim();
-            const currentTimestamp = Date.now(); // Unix Timestamp in milliseconds (เวลาปัจจุบัน)
+            const currentTimestamp = Date.now();
             const defaultBody = `{
     "message": [
         {
@@ -682,97 +649,70 @@
             }
         });
 
-        async function sendRequest() {
-            const sessionId = sessionIdInput.value.trim();
-            let body = bodyTextarea.value.trim();
-            const sendBtn = document.getElementById('sendBtn');
-            const loading = document.getElementById('loading');
-            const responseSection = document.getElementById('responseSection');
+        // Copy URL function
+        function copyUrl() {
+            const urlDisplay = document.getElementById('urlDisplay');
+            const copyBtn = document.getElementById('copyUrlBtn');
+            const url = urlDisplay.textContent;
 
-            // Validate inputs
-            if (!sessionId) {
-                alert('กรุณาใส่ Session ID');
+            if (url === 'กรุณาเลือก Channel ก่อน') {
+                alert('กรุณาเลือก Channel ก่อนคัดลอก URL');
                 return;
             }
 
-            if (!selectedChannel) {
-                alert('กรุณาเลือก Channel');
-                return;
-            }
-
-            const url = urlMap[selectedChannel];
-            if (!url) {
-                alert('ไม่พบ URL สำหรับ Channel นี้');
-                return;
-            }
-
-            // Show loading
-            loading.classList.remove('hidden');
-            responseSection.classList.add('hidden');
-            sendBtn.disabled = true;
-
-            try {
-                // Validate JSON
-                JSON.parse(body);
-
-                const options = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: body
-                };
-
-                const response = await fetch(url, options);
-                const responseText = await response.text();
+            navigator.clipboard.writeText(url).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✓ คัดลอกแล้ว';
+                copyBtn.classList.add('copied');
                 
-                let responseData;
-                try {
-                    responseData = JSON.parse(responseText);
-                } catch (e) {
-                    responseData = responseText;
-                }
-
-                displayResponse(response.status, response.ok, responseData);
-
-            } catch (error) {
-                displayResponse(0, false, {
-                    error: error.message,
-                    details: 'Failed to send request. กรุณาตรวจสอบ URL และเปิด CORS Extension',
-                    tip: 'ตรวจสอบว่าเปิด "Allow CORS: Access-Control-Allow-Origin" แล้ว'
-                });
-            } finally {
-                loading.classList.add('hidden');
-                sendBtn.disabled = false;
-            }
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                alert('ไม่สามารถคัดลอกได้: ' + err);
+            });
         }
 
-        function displayResponse(status, success, data) {
-            const responseSection = document.getElementById('responseSection');
-            const statusBadge = document.getElementById('statusBadge');
-            const responseBody = document.getElementById('responseBody');
+        // Copy Body function - Refresh timestamp ก่อนแล้วค่อย copy
+        function copyBody() {
+            const bodyTextarea = document.getElementById('body');
+            const copyBtn = document.getElementById('copyBodyBtn');
+            
+            // Refresh timestamp ก่อน copy
+            updateBodyPreview();
+            
+            const body = bodyTextarea.value;
 
-            responseSection.classList.remove('hidden');
-
-            // Set status badge
-            if (success) {
-                statusBadge.className = 'status-badge status-success';
-                statusBadge.textContent = `Status: ${status} OK`;
-            } else {
-                statusBadge.className = 'status-badge status-error';
-                statusBadge.textContent = status === 0 ? 'Error' : `Status: ${status} Error`;
+            if (!body.trim()) {
+                alert('ไม่มีข้อมูลในช่อง Request Body');
+                return;
             }
 
-            // Format and display response
-            if (typeof data === 'object') {
-                responseBody.textContent = JSON.stringify(data, null, 2);
-            } else {
-                responseBody.textContent = data;
+            // Validate JSON
+            try {
+                JSON.parse(body);
+            } catch (e) {
+                alert('Request Body ไม่ใช่ JSON ที่ถูกต้อง กรุณาตรวจสอบอีกครั้ง');
+                return;
             }
+
+            navigator.clipboard.writeText(body).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✓ คัดลอกแล้ว';
+                copyBtn.classList.add('copied');
+                
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                alert('ไม่สามารถคัดลอกได้: ' + err);
+            });
         }
 
         function clearAll() {
-            const currentTimestamp = Date.now(); // Unix Timestamp in milliseconds (เวลาปัจจุบัน)
+            const currentTimestamp = Date.now();
             sessionIdInput.value = '';
             channelInput.value = '';
             selectedChannel = '';
@@ -796,16 +736,8 @@
 }`;
             document.getElementById('urlDisplay').textContent = 'กรุณาเลือก Channel ก่อน';
             document.getElementById('urlDisplay').style.color = '#999';
-            document.getElementById('responseSection').classList.add('hidden');
             channelList.classList.add('hidden');
         }
-
-        // Allow sending with Ctrl+Enter
-        bodyTextarea.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'Enter') {
-                sendRequest();
-            }
-        });
 
         // Initialize body preview with current timestamp on page load
         updateBodyPreview();
