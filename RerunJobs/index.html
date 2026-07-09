@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rerun Jobs Tool_V7 by Daiice</title>
+    <title>Rerun Jobs Tool_V8 by Daiice</title>
     <style>
         * {
             margin: 0;
@@ -240,7 +240,7 @@
         
         .job-list-section {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             margin: 15px 0;
         }
@@ -459,7 +459,7 @@
 <body>
     <div class="main-container">
 		<div class="header">
-            <h1>🛠️ Rerun Jobs Tool_V7 by Daiice</h1>
+            <h1>🛠️ Rerun Jobs Tool_V8 by Daiice</h1>
             <p>เครื่องมือสำหรับสร้างข้อความ ค้นหา log และคำนวณ Odate</p>
         </div>
 		
@@ -570,10 +570,7 @@
                         <textarea id="jobs2" placeholder="ใส่รายชื่อ Job (แยกบรรทัด)&#10;เช่น&#10;U805IMB015&#10;U814FTB5142"></textarea>
                     </div>
                     
-                    <div class="job-input-group">
-                        <label for="jobs1b">📋 Jobs สำหรับข้อ 1b:</label>
-                        <textarea id="jobs1b" placeholder="ใส่รายชื่อ Job (แยกบรรทัด)&#10;เช่น&#10;U814EXD1311&#10;U814IMD1311"></textarea>
-                    </div>
+
                     
                     <div class="job-input-group">
                         <label for="jobs3">📋 Jobs สำหรับข้อ 3:</label>
@@ -867,7 +864,7 @@
         function saveJobsToCookie() {
             setCookie('jobs1', document.getElementById('jobs1').value, 365);
             setCookie('jobs2', document.getElementById('jobs2').value, 365);
-            setCookie('jobs1b', document.getElementById('jobs1b').value, 365);
+
             setCookie('jobs3', document.getElementById('jobs3').value, 365);
             setCookie('jobs45', document.getElementById('jobs45').value, 365);
         }
@@ -875,13 +872,13 @@
         function loadJobsFromCookie() {
             const jobs1 = getCookie('jobs1');
             const jobs2 = getCookie('jobs2');
-            const jobs1b = getCookie('jobs1b');
+
             const jobs3 = getCookie('jobs3');
             const jobs45 = getCookie('jobs45');
 
             if (jobs1) document.getElementById('jobs1').value = jobs1;
             if (jobs2) document.getElementById('jobs2').value = jobs2;
-            if (jobs1b) document.getElementById('jobs1b').value = jobs1b;
+
             if (jobs3) document.getElementById('jobs3').value = jobs3;
             if (jobs45) document.getElementById('jobs45').value = jobs45;
         }
@@ -890,21 +887,21 @@
             if (confirm('คุณต้องการล้างรายชื่อ Job ทั้งหมดใช่หรือไม่?')) {
                 document.getElementById('jobs1').value = '';
                 document.getElementById('jobs2').value = '';
-                document.getElementById('jobs1b').value = '';
+
                 document.getElementById('jobs3').value = '';
                 document.getElementById('jobs45').value = '';
                 
                 // ลบ Cookie
                 setCookie('jobs1', '', -1);
                 setCookie('jobs2', '', -1);
-                setCookie('jobs1b', '', -1);
+
                 setCookie('jobs3', '', -1);
                 setCookie('jobs45', '', -1);
             }
         }
 
         // Auto-save on input change
-        ['jobs1', 'jobs2', 'jobs1b', 'jobs3', 'jobs45'].forEach(id => {
+        ['jobs1', 'jobs2', 'jobs3', 'jobs45'].forEach(id => {
             const element = document.getElementById(id);
             if (element) {
                 element.addEventListener('input', function() {
@@ -982,7 +979,7 @@
             const genDateInput = document.getElementById('genDate').value;
             const jobs1Text = document.getElementById('jobs1').value;
             const jobs2Text = document.getElementById('jobs2').value;
-            const jobs1bText = document.getElementById('jobs1b').value;
+
             const jobs3Text = document.getElementById('jobs3').value;
             const jobs45Text = document.getElementById('jobs45').value;
             
@@ -1008,7 +1005,7 @@
             
             const jobs1 = parseJobs(jobs1Text);
             const jobs2 = parseJobs(jobs2Text);
-            const jobs1b = parseJobs(jobs1bText);
+
             const jobs3 = parseJobs(jobs3Text);
             const jobs45 = parseJobs(jobs45Text);
             
@@ -1042,13 +1039,7 @@
                 emailBody += `\n`;
             }
             
-            if (jobs1b.length > 0) {
-                emailBody += `ขอ Rerun Job Odate = **${formatDate(odate1)} (${formatDateWithMonth(odate1)})**\n`;
-                jobs1b.forEach(job => {
-                    emailBody += `${job}\n`;
-                });
-                emailBody += `\n`;
-            }
+
             
             if (jobs3.length > 0) {
                 emailBody += `ขอ Rerun Job Odate = **${formatDate(odate3)} (${formatDateWithMonth(odate3)})**\n`;
