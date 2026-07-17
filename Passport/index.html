@@ -633,7 +633,7 @@
         
         function generateQuery4() {
             const investorId = dataStore.investorId || document.getElementById('investorId').value;
-            const query = `"v2/${investorId}" and "X-Request-Id"`;
+            const query = `"v3/${investorId}" and "X-Request-Id"`;
             const output = document.getElementById('output4');
             output.innerHTML = query + '<button class="copy-btn" onclick="copyToClipboard(\'output4\')">Copy</button>';
             output.style.display = 'block';
