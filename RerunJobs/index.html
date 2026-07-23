@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rerun Jobs Tool_V8 by Daiice</title>
+    <title>Rerun Jobs Tool_V9 by Daiice</title>
     <style>
         * {
             margin: 0;
@@ -459,7 +459,7 @@
 <body>
     <div class="main-container">
 		<div class="header">
-            <h1>🛠️ Rerun Jobs Tool_V8 by Daiice</h1>
+            <h1>🛠️ Rerun Jobs Tool_V9 by Daiice</h1>
             <p>เครื่องมือสำหรับสร้างข้อความ ค้นหา log และคำนวณ Odate</p>
         </div>
 		
@@ -1073,7 +1073,12 @@
                 .replace(/\*\*(.+?)\*\*/g, '<strong style="color: #cd5937;">$1</strong>')
                 .replace(/\n/g, '<br>');
             
+            const totalJobsCount = jobs1.length + jobs2.length + jobs3.length + jobs45.length;
+            
             const html = `
+                <div style="background: #e3f2fd; color: #1976d2; padding: 10px 15px; border-radius: 8px; margin-bottom: 15px; font-weight: 600; border-left: 4px solid #2196f3; display: flex; align-items: center; justify-content: space-between;">
+                    <span>📌 ยอดรวม: คุณได้กรอก Jobs ทั้งหมด <strong>${totalJobsCount}</strong> รายการ</span>
+                </div>
                 <div class="email-preview">
                     <div class="email-subject">
                         ${subject}
